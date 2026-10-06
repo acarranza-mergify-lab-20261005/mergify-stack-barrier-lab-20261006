@@ -1,0 +1,28 @@
+merge_queue:
+  mode: parallel
+  max_parallel_checks: 2
+
+scopes:
+  source:
+    files:
+      docs:
+        include:
+          - docs/**
+      api:
+        include:
+          - services/api/**
+  barrier_files:
+    include:
+      - build/global.txt
+
+queue_rules:
+  - name: bounty-s7-hold-20261006
+    queue_conditions:
+      - -draft
+    merge_conditions:
+      - check-success = bounty-s7-never-issued-20261006
+    batch_size: 2
+    batch_max_wait_time: 10 seconds
+    merge_method: merge
+
+pull_request_rules: []
